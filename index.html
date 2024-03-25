@@ -11,11 +11,18 @@
       <div id="artContainer">
         <canvas id="gridCanvas" width="640" height="640"></canvas>
       </div>
-      <input type="text" name="size" id="gridResolution" />
-      <label for="gridResolution">Grid resolution</label>
-      <button name="generaGrid" id="generateGrid">Generate</button>
-      <input type="color" name="colorPicker" id="colorPicker" />
+      <div class="leftPanel"></div>
+
+      <div id="layerArea" class="layerArea"></div>
+
+      <div class="rightPanel">
+        <input type="text" name="size" id="gridResolution" value="16" />
+        <label for="gridResolution">Grid resolution</label>
+        <button name="generaGrid" id="generateGrid">Generate</button>
+        <input type="color" name="colorPicker" id="colorPicker" />
+      </div>
     </div>
+    <script src="script/tabEvent.js"></script>
     <script src="script/gridCanvas.js"></script>
     <script src="script/index.js"></script>
   </body>
