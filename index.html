@@ -11,19 +11,38 @@
       <div id="artContainer">
         <canvas id="gridCanvas" width="640" height="640"></canvas>
       </div>
-      <div class="leftPanel"></div>
+      <!-- <div class="leftPanel"></div> -->
 
       <div id="layerArea" class="layerArea"></div>
 
       <div class="rightPanel">
-        <input type="text" name="size" id="gridResolution" value="16" />
-        <label for="gridResolution">Grid resolution</label>
-        <button name="generaGrid" id="generateGrid">Generate</button>
-        <input type="color" name="colorPicker" id="colorPicker" />
+        <!-- Setting resolution -->
+        <div class="flex space-between w-full">
+          <label for="gridResolution" id="gridResolutionLabel"
+            >Resolution</label
+          >
+          <div class="flex space-x">
+            <input type="text" name="size" id="gridResolution" value="16" />
+            <button name="generaGrid" id="generateGrid">Generate</button>
+          </div>
+        </div>
+
+        <div class="flex space-between w-full">
+          <label for="colorPicker">Color</label>
+          <input type="color" name="colorPicker" id="colorPicker" />
+        </div>
+
+        <div class="layerList" id="layerList">
+          <button name="addLayer" id="addLayer">Add layer</button>
+        </div>
       </div>
     </div>
     <script src="script/tabEvent.js"></script>
+    <script src="script/layerCard.js"></script>
+    <script src="script/layerManagement.js"></script>
     <script src="script/gridCanvas.js"></script>
+    <script src="script/layer.js"></script>
     <script src="script/index.js"></script>
+    <!-- event -->
   </body>
 </html>

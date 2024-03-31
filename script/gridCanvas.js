@@ -1,12 +1,15 @@
 const DEFAULT_VALUE_GRID = 32;
 
 class GridCanvas {
-  isDraggable;
   #gridItemSize;
   #canvas;
   #ctx;
   #color;
   #gridSize;
+  initialX;
+  initialY;
+  offsetX = 0;
+  offsetY = 0;
 
   constructor(canvas, color) {
     this.#canvas = canvas;
@@ -16,7 +19,6 @@ class GridCanvas {
 
     this.#gridSize = DEFAULT_VALUE_GRID;
 
-    this.isDraggable = false;
   }
 
   drawGrid() {
@@ -48,4 +50,25 @@ class GridCanvas {
     colorPicker.style.backgroundColor = event.target.value;
     this.#color = event.target.value;
   };
+
+  drawPixelListeners() {
+    this.#canvas.addEventListener("click", (event) => {
+      gridCanvas.fillCellColor(event);
+    });
+
+    this.#canvas.addEventListener("mousedown", () => {
+      gridCanvas.isDragging = true;
+    });
+    this.#canvas.addEventListener("mouseup", () => {
+      gridCanvas.isDragging = false;
+    });
+
+    this.#canvas.addEventListener("mousemove", (event) => {
+      if (gridCanvas.isDragging) {
+        gridCanvas.fillCellColor(event);
+      }
+    });
+  }
+
+
 }

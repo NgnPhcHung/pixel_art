@@ -5,31 +5,93 @@ html {
   padding: 0;
   overflow: hidden;
   background-color: #202020;
+  color: #a0a0a0;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+#artContainer {
+  position: relative;
+  background-color: #fff;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 
 .viewport {
-  width: 98vw;
-  height: 98vh;
+  width: 100vw;
+  height: 90vh;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .rightPanel {
-  width: 30vw;
   height: 100%;
+  width: 25rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   background-color: #303030;
+  padding: 1rem;
+  gap: 0.5rem 0;
 }
 
 .leftPanel {
-  width: 30vw;
   height: 100%;
+}
+.layerList {
+  width: 100%;
+  height: 30rem;
+  overflow: hidden;
+  overflow-y: auto;
+  background-color: #bbddd3;
+  align-self: flex-end;
+  padding: 1rem;
+}
+.layerList:nth-child(odd),
+.layerList:nth-child(even) {
+  margin: 4px 0px;
+}
+
+#layerCard {
+  width: 100%;
+  height: 2rem;
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  background: #202020;
+  margin: 4px 0px;
+  color: white;
+  font: 600;
 }
 
 canvas {
   border: 1px solid #000;
+  background-color: #fff;
+}
+
+#gridCanvas {
+  position: absolute;
+}
+
+#gridResolutionLabel {
+  align-self: flex-start;
+}
+#gridResolution {
+  width: 3rem;
+}
+
+.flex {
+  display: flex;
+}
+.space-between {
+  justify-content: space-between;
+}
+.w-full {
+  width: 100%;
+}
+
+.space-x:nth-child(odd),
+.space-x:nth-child(even) {
+  gap: 4px;
 }
