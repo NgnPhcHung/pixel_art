@@ -11,12 +11,15 @@ class Layer {
     const newCanvas = document.createElement("canvas");
     const layerManagement = new LayerManagement();
 
-    newCanvas.style.background = "#fff";
+    newCanvas.style.background = "#a0a0a0";
     newCanvas.style.position = "absolute";
     newCanvas.id = "gridCanvas";
     newCanvas.width = 640;
     newCanvas.height = 640;
     newCanvas.style.zIndex = this.zIndex;
+    newCanvas.addEventListener("contextmenu", function (event) {
+      event.preventDefault();
+    });
     artContainer.appendChild(newCanvas);
     layerManagement.addLayer();
     // this.layerManagement.addLayer();

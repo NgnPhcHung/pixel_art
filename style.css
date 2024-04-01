@@ -8,32 +8,64 @@ html {
   color: #a0a0a0;
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
 }
+
+button {
+  background-color: transparent;
+  outline: none;
+  border: none;
+  color: #a0a0aa;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  cursor: pointer;
+}
+button:hover {
+  color: white;
+}
+
+input[type="color"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 50px;
+  height: 50px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+input[type="color"]::-webkit-color-swatch {
+  border-radius: 5px;
+  border: none;
+}
+
 #artContainer {
   position: relative;
-  background-color: #fff;
+  background-color: transparent;
   width: 100%;
   height: 100%;
   overflow: hidden;
+  display: grid;
+  place-items: center;
 }
 
 .viewport {
   width: 100vw;
-  height: 90vh;
+  height: calc(100vh - 2rem);
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .rightPanel {
-  height: 100%;
   width: 25rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   background-color: #303030;
-  padding: 1rem;
+  padding: 2rem 0.25rem;
   gap: 0.5rem 0;
+  position: relative;
+  margin-right: 0.5rem;
+  border-radius: 5px 0 0 5px;
 }
 
 .leftPanel {
@@ -44,9 +76,7 @@ html {
   height: 30rem;
   overflow: hidden;
   overflow-y: auto;
-  background-color: #bbddd3;
-  align-self: flex-end;
-  padding: 1rem;
+  background-color: #434242;
 }
 .layerList:nth-child(odd),
 .layerList:nth-child(even) {
@@ -54,7 +84,6 @@ html {
 }
 
 #layerCard {
-  width: 100%;
   height: 2rem;
   padding: 0.5rem 1rem;
   display: flex;
@@ -94,4 +123,20 @@ canvas {
 .space-x:nth-child(odd),
 .space-x:nth-child(even) {
   gap: 4px;
+}
+
+#addLayer {
+  align-self: flex-end;
+  font-size: 1rem;
+}
+
+.colorPalette {
+  width: 100%;
+  height: fit-content;
+  padding: 1rem 0;
+  background-color: #20202070;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+  grid-auto-rows: 50px;
+  place-items: center;
 }

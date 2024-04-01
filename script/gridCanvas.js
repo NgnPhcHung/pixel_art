@@ -4,21 +4,19 @@ class GridCanvas {
   #gridItemSize;
   #canvas;
   #ctx;
-  #color;
   #gridSize;
   initialX;
   initialY;
   offsetX = 0;
   offsetY = 0;
 
-  constructor(canvas, color) {
+  constructor(canvas) {
     this.#canvas = canvas;
     this.#gridItemSize = canvas.width / this.#gridSize;
     this.#ctx = canvas.getContext("2d");
-    this.#color = color;
 
     this.#gridSize = DEFAULT_VALUE_GRID;
-
+    this.colorPalette = new ColorPalette();
   }
 
   drawGrid() {
@@ -27,17 +25,23 @@ class GridCanvas {
 
     this.#gridItemSize = this.#canvas.width / this.#gridSize;
     this.#ctx.clearRect(0, 0, this.#canvas.width, this.#canvas.height);
+
+    this.colorPalette.load();
   }
 
   fillCellColor(event) {
-    var rect = this.#canvas.getBoundingClientRect();
-    var mouseX = event.clientX - rect.left;
-    var mouseY = event.clientY - rect.top;
+    const selectedColor = this.colorPalette.getSelectedColor();
 
-    var gridX = Math.floor(mouseX / this.#gridItemSize);
-    var gridY = Math.floor(mouseY / this.#gridItemSize);
+    const rect = this.#canvas.getBoundingClientRect();
+    const mouseX = event.clientX - rect.left;
+    const mouseY = event.clientY - rect.top;
 
-    this.#ctx.fillStyle = this.#color;
+    const gridX = Math.floor(mouseX / this.#gridItemSize);
+    const gridY = Math.floor(mouseY / this.#gridItemSize);
+
+    console.log(selectedColor);
+
+    this.#ctx.fillStyle = selectedColor;
     this.#ctx.fillRect(
       gridX * this.#gridItemSize,
       gridY * this.#gridItemSize,
@@ -46,29 +50,30 @@ class GridCanvas {
     );
   }
 
-  setColor = (event) => {
-    colorPicker.style.backgroundColor = event.target.value;
-    this.#color = event.target.value;
-  };
-
   drawPixelListeners() {
     this.#canvas.addEventListener("click", (event) => {
-      gridCanvas.fillCellColor(event);
+      event.preventDefault();
+
+      if (event.button === 0) {
+        this.fillCellColor(event);
+      }
     });
 
-    this.#canvas.addEventListener("mousedown", () => {
-      gridCanvas.isDragging = true;
+    this.#canvas.addEventListener("mousedown", (event) => {
+      if (event.button === 0) {
+        this.isDragging = true;
+      }
     });
-    this.#canvas.addEventListener("mouseup", () => {
-      gridCanvas.isDragging = false;
+    this.#canvas.addEventListener("mouseup", (event) => {
+      if (event.button === 0) {
+        this.isDragging = false;
+      }
     });
 
     this.#canvas.addEventListener("mousemove", (event) => {
-      if (gridCanvas.isDragging) {
-        gridCanvas.fillCellColor(event);
+      if (this.isDragging && event.button === 0) {
+        this.fillCellColor(event);
       }
     });
   }
-
-
 }

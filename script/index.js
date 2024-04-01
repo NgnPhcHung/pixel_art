@@ -1,19 +1,22 @@
-const colorPicker = document.getElementById("colorPicker");
 const generateGrid = document.getElementById("generateGrid");
 const canvas = document.getElementById("gridCanvas");
 const addLayerBtn = document.getElementById("addLayer");
 
-const colorValue = colorPicker.value;
-const gridCanvas = new GridCanvas(canvas, colorValue);
+const gridCanvas = new GridCanvas(canvas);
 const layer = new Layer();
+
+canvas.addEventListener("contextmenu", function (event) {
+  event.preventDefault();
+});
 
 document.addEventListener("DOMContentLoaded", () => {
   gridCanvas.drawGrid();
 });
 
-colorPicker.addEventListener("change", (event) => {
-  gridCanvas.setColor(event);
-});
+// colorPicker.addEventListener("change", (event) => {
+//   // gridCanvas.setColor(event);
+//   colorPalette.updateSelected();
+// });
 
 generateGrid.addEventListener("click", () => {
   gridCanvas.drawGrid();
