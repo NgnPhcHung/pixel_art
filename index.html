@@ -15,7 +15,8 @@
 
       <div id="layerArea" class="layerArea"></div>
 
-      <div class="rightPanel">
+      <div class="rightPanel" id="rightPanel">
+        <button id="collapseButton">Collapse</button>
         <!-- Setting resolution -->
         <div class="flex space-between w-full">
           <label for="gridResolution" id="gridResolutionLabel"
@@ -29,7 +30,11 @@
 
         <button name="addLayer" id="addLayer">Add layer</button>
         <div class="layerList" id="layerList"></div>
-        <div class="colorPalette" id="colorPalette"></div>
+      </div>
+
+      <div id="colorMenu">
+        <div id="addPalette">+</div>
+        <div class="colorPalette space-x" id="colorPalette"></div>
       </div>
     </div>
     <!-- color palette -->

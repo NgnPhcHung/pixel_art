@@ -1,18 +1,12 @@
 class ColorPalette {
   constructor() {
-    this.colors = [
-      "#ffffff",
-      "#000000",
-      "#E14D2A",
-      "#CF0A0A",
-      "#3E6D9C",
-      "#6F38C5",
-      "#ADDDD0",
-      "#FF4A4A",
-      "#CFD2CF",
-      "#003865",
-    ];
+    this.colors = ["#ffffff", "#000000"];
     this.selected = this.colors[1];
+    this.isGenerated = false;
+
+    this.load = this.load.bind(this);
+    this.getSelectedColor = this.getSelectedColor.bind(this);
+    this.addColor = this.addColor.bind(this);
   }
 
   load() {
@@ -23,18 +17,33 @@ class ColorPalette {
       newColorInput.type = "color";
 
       newColorInput.addEventListener("click", (event) => {
-        this.selected = event.target.value;
+        this.selected = newColorInput.value;
       });
 
       newColorInput.addEventListener("input", (event) => {
-        const temp = this.selected;
         this.selected = event.target.value;
-        this.colors[temp] = this.selected;
+        color = this.selected;
       });
       colorPalette.appendChild(newColorInput);
     });
   }
   getSelectedColor() {
     return this.selected;
+  }
+
+  addColor() {
+    this.colors.push("#000000");
+    const colorPalette = document.querySelector("#colorPalette");
+    const newColorInput = document.createElement("input");
+    newColorInput.value = "#000000";
+    newColorInput.type = "color";
+    newColorInput.addEventListener("click", (event) => {
+      this.selected = newColorInput.value;
+    });
+
+    newColorInput.addEventListener("input", (event) => {
+      this.selected = event.target.value;
+    });
+    colorPalette.appendChild(newColorInput);
   }
 }

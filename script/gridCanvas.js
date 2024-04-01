@@ -21,12 +21,18 @@ class GridCanvas {
 
   drawGrid() {
     const gridInputValue = document.getElementById("gridResolution").value;
+    const addPaletteButton = document.getElementById("colorMenu");
+
     this.#gridSize = parseInt(gridInputValue);
 
     this.#gridItemSize = this.#canvas.width / this.#gridSize;
     this.#ctx.clearRect(0, 0, this.#canvas.width, this.#canvas.height);
 
-    this.colorPalette.load();
+    if (!this.colorPalette.isGenerated) {
+      addPaletteButton.addEventListener("click", this.colorPalette.addColor);
+      this.colorPalette.load();
+      this.colorPalette.isGenerated = true;
+    }
   }
 
   fillCellColor(event) {

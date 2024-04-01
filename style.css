@@ -25,8 +25,8 @@ input[type="color"] {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  width: 50px;
-  height: 50px;
+  width: 30px;
+  height: 30px;
   background-color: transparent;
   border: none;
   cursor: pointer;
@@ -52,10 +52,12 @@ input[type="color"]::-webkit-color-swatch {
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
 }
 
 .rightPanel {
-  width: 25rem;
+  width: 15rem;
+  height: calc(100% - 12rem);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -63,9 +65,13 @@ input[type="color"]::-webkit-color-swatch {
   background-color: #303030;
   padding: 2rem 0.25rem;
   gap: 0.5rem 0;
-  position: relative;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translate(-0.5rem, -50%);
   margin-right: 0.5rem;
   border-radius: 5px 0 0 5px;
+  /* overflow: hidden; */
 }
 
 .leftPanel {
@@ -134,9 +140,48 @@ canvas {
   width: 100%;
   height: fit-content;
   padding: 1rem 0;
-  background-color: #20202070;
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+}
+
+#addPalette {
+  border-radius: 5px;
+  border: 1px solid white;
+  width: 20px;
+  height: 20px;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
-  grid-auto-rows: 50px;
   place-items: center;
+  font-size: 20px;
+}
+#addPalette:hover {
+  cursor: pointer;
+  border-color: #a0a0a0;
+}
+#colorMenu {
+  height: 2rem;
+  width: calc(100vw - 10rem);
+  position: absolute;
+  bottom: 1%;
+  /* right: 10%; */
+  /* transform: translate(-50%, 50%); */
+  background-color: #5b5b5b;
+  border-radius: 10px;
+  overflow: hidden;
+  overflow-x: auto;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+}
+
+/* Add this CSS to your style.css */
+.rightPanel.collapsed {
+  right: -20rem; 
+}
+
+.rightPanel.collapsed #collapseButton {
+  /* display: none; */
+  position: fixed;
+  top: 5%;
+  right: 20rem;
 }

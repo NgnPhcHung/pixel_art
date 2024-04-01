@@ -11,6 +11,16 @@ canvas.addEventListener("contextmenu", function (event) {
 
 document.addEventListener("DOMContentLoaded", () => {
   gridCanvas.drawGrid();
+
+  // Get references to elements
+  const rightPanel = document.getElementById("rightPanel");
+  const collapseButton = document.getElementById("collapseButton");
+
+  // Add click event listener to collapse button
+  collapseButton.addEventListener("click", function () {
+    // Toggle collapse class on rightPanel
+    rightPanel.classList.toggle("collapsed");
+  });
 });
 
 // colorPicker.addEventListener("change", (event) => {
