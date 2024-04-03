@@ -9,24 +9,49 @@ canvas.addEventListener("contextmenu", function (event) {
   event.preventDefault();
 });
 
+//browser settings
+document.addEventListener(
+  "mousedown",
+  function (event) {
+    if (event.detail > 1) {
+      event.preventDefault();
+    }
+  },
+  false
+);
+window.addEventListener(
+  "wheel",
+  function (event) {
+    if (event.ctrlKey === true) {
+      event.preventDefault();
+    }
+  },
+  { passive: false }
+);
+
+function createCustomCursor() {
+  const cursor = document.createElement("div");
+  cursor.classList.add("customCursor");
+  cursor.setAttribute("tool-data", "pencil");
+  document.body.appendChild(cursor);
+
+  document.addEventListener("mousemove", function (e) {
+    cursor.style.left = e.pageX + "px";
+    cursor.style.top = e.pageY + "px";
+  });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   gridCanvas.drawGrid();
 
-  // Get references to elements
   const rightPanel = document.getElementById("rightPanel");
   const collapseButton = document.getElementById("collapseButton");
 
-  // Add click event listener to collapse button
   collapseButton.addEventListener("click", function () {
-    // Toggle collapse class on rightPanel
     rightPanel.classList.toggle("collapsed");
   });
+  createCustomCursor();
 });
-
-// colorPicker.addEventListener("change", (event) => {
-//   // gridCanvas.setColor(event);
-//   colorPalette.updateSelected();
-// });
 
 generateGrid.addEventListener("click", () => {
   gridCanvas.drawGrid();

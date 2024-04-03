@@ -1,16 +1,16 @@
 class LayerCard {
-  constructor() {
+  constructor(newLayerName) {
     this.layerList = document.querySelectorAll("#layerCard");
     this.zIndex = this.#maxZIndexLayer(this.layerList);
     this.layerCard = document.createElement("div");
     this.layerCard.draggable = true;
     this.layerCard.id = "layerCard";
     this.layerCard.style.zIndex = this.zIndex;
-    this.layerCard.setAttribute(
-      "name",
-      `Layer ${this.layerList.length + 1 || 1}`
-    );
-    this.layerCard.innerHTML = `Layer ${this.layerList.length + 1 || 1}`;
+    this.layerCard.setAttribute("name", newLayerName);
+    this.layerCard.innerHTML = `
+      <span>Layer ${this.layerList.length + 1 || 1}</span>
+      <input type="checkbox" id="checkBox_${newLayerName}"/>
+    `;
   }
 
   #maxZIndexLayer(listDiv) {

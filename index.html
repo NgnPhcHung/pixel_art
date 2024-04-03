@@ -2,8 +2,13 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
+
     <title>Art pixel</title>
   </head>
   <body>
@@ -11,19 +16,21 @@
       <div id="artContainer">
         <canvas id="gridCanvas" width="640" height="640"></canvas>
       </div>
-      <!-- <div class="leftPanel"></div> -->
+      <div class="leftPanel" id="toolBar"></div>
 
       <div id="layerArea" class="layerArea"></div>
 
-      <div class="rightPanel" id="rightPanel">
-        <button id="collapseButton">Collapse</button>
-        <!-- Setting resolution -->
+      <div class="rightPanel collapsed" id="rightPanel">
+        <button id="collapseButton">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+
         <div class="flex space-between w-full">
           <label for="gridResolution" id="gridResolutionLabel"
             >Resolution</label
           >
           <div class="flex space-x">
-            <input type="text" name="size" id="gridResolution" value="16" />
+            <input type="text" name="size" id="gridResolution" value="32" />
             <button name="generaGrid" id="generateGrid">Generate</button>
           </div>
         </div>
@@ -33,11 +40,14 @@
       </div>
 
       <div id="colorMenu">
-        <div id="addPalette">+</div>
+        <div id="addPalette" class="btn">+</div>
         <div class="colorPalette space-x" id="colorPalette"></div>
       </div>
     </div>
     <!-- color palette -->
+    <script src="math/utils.js"></script>
+    <script src="script/mainBackground.js"></script>
+    <script src="script/toolsBar.js"></script>
     <script src="script/colorPalette.js"></script>
     <script src="script/tabEvent.js"></script>
     <script src="script/layerCard.js"></script>

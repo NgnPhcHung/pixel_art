@@ -1,36 +1,22 @@
 class LayerManagement {
-  #layers;
   #layerRenderer;
   static dragStartIndex;
 
   constructor() {
-    this.#layers = document.querySelectorAll("#gridCanvas");
     this.#layerRenderer = document.querySelector("#layerList");
   }
 
-  addLayer() {
-    const layerCard = new LayerCard();
+  addLayer(newLayerName) {
+    const layerCard = new LayerCard(newLayerName);
     this.#layerRenderer.appendChild(layerCard.layerCard);
 
     this.#eventListeners();
   }
   #dragStart(card, cardList) {
     LayerManagement.dragStartIndex = cardList.indexOf(card);
-    console.log(LayerManagement.dragStartIndex);
-    // console.log(
-    //   "start drag",
-    //   Array.from(this.cardList).map((item) => item.getAttribute("name"))
-    // );
   }
   #dragOver(event, card, cardList) {
     event.preventDefault();
-    // console.log("dragOver");
-    // cardList.forEach((otherCard) => {
-    //   console.log(otherCard.getAttribute('name'))
-    //   if (otherCard !== card) {
-    //     otherCard.style.opacity = "0.7";
-    //   }
-    // });
   }
 
   #drop(card, cardList) {
@@ -69,16 +55,22 @@ class LayerManagement {
 
   #dragLeave(card, cardList) {
     if (card) {
-      // Check if card is defined
       card.classList.remove("dragEnter");
 
       cardList.forEach((otherCard) => {
         if (otherCard) {
-          // Check if otherCard is defined
           otherCard.style.opacity = "1";
         }
       });
     }
+  }
+
+  #selectLayer(card, cardList = []) {
+    cardList.forEach((card) => {
+      card.classList.contains("selected")
+        ? card.classList.remove("selected")
+        : card.classList.add("selected");
+    });
   }
 
   #eventListeners() {
@@ -100,6 +92,9 @@ class LayerManagement {
       );
       currentCard.addEventListener("dragleave", () =>
         this.#dragLeave(currentCard, cardList)
+      );
+      currentCard.addEventListener("click", () =>
+        this.#selectLayer(currentCard, cardList)
       );
     });
   }

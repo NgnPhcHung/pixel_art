@@ -15,6 +15,8 @@ class ColorPalette {
       const newColorInput = document.createElement("input");
       newColorInput.value = color;
       newColorInput.type = "color";
+      newColorInput.style.display = "inline-block";
+      newColorInput.style.width = "30px !important";
 
       newColorInput.addEventListener("click", (event) => {
         this.selected = newColorInput.value;
