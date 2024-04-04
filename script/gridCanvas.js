@@ -12,7 +12,9 @@ class GridCanvas {
   #isDragging = false;
   #isDrawing = false;
   #filledCells = [];
-  #currentCell = { x: undefined, y: undefined };
+
+  #currentX = null;
+  #currentY = null;
 
   constructor(canvas) {
     this.#canvas = canvas;
@@ -32,10 +34,10 @@ class GridCanvas {
     // this.drawPixelListeners();
     this.initDrag();
     canvas.willReadFrequently = true;
+
+    //bind func
     this.getMouse = this.#getMouse.bind(this);
     this.getTool = this.#getTool.bind(this);
-    this.setNewCell = this.#setNewCell.bind(this);
-    this.isSameCord = this.#isSameCord.bind(this);
   }
 
   initDrag() {
@@ -90,15 +92,14 @@ class GridCanvas {
       this.#initialY = event.clientY - this.#offsetY;
     }
     if (event.button === 0) {
-      this.setNewCell(event);
+      this.getTool(event);
+      this.#setNewCell(event);
       this.#isDrawing = true;
     }
   }
   #handleMouseUp() {
     this.#isDragging = false;
     this.#isDrawing = false;
-    this.#currentCell.x = undefined;
-    this.#currentCell.y = undefined;
   }
 
   #handleMouseWheel(event) {
@@ -149,10 +150,13 @@ class GridCanvas {
 
     const gridX = Math.floor(mouseX / this.#gridItemSize);
     const gridY = Math.floor(mouseY / this.#gridItemSize);
+
     return { gridX, gridY };
   }
 
   #getTool(event) {
+    if (this.#isSameCord(event)) return;
+
     const selectedColor = this.colorPalette.getSelectedColor();
     const { gridX, gridY } = this.getMouse(event);
     const cursor = document.querySelector(".customCursor");
@@ -160,15 +164,19 @@ class GridCanvas {
     const x = gridX * this.#gridItemSize;
     const y = gridY * this.#gridItemSize;
 
-    if (this.isSameCord(event)) return;
     switch (toolType) {
       case "pencil":
         this.#ctx.fillStyle = selectedColor;
         this.#ctx.fillRect(x, y, this.#gridItemSize, this.#gridItemSize);
-        console.log({ x, y, color: selectedColor });
-        this.#filledCells.push({ x, y, color: selectedColor });
-        this.setNewCell(event);
-
+        const existingCellIndex = this.#filledCells.findIndex(
+          (cell) => cell.x === gridX && cell.y === gridY
+        );
+        if (existingCellIndex === -1) {
+          this.#filledCells.push({ x: gridX, y: gridY, color: selectedColor });
+        } else {
+          this.#filledCells[existingCellIndex].color = selectedColor; // Update color if cell already exists
+        }
+        this.#setNewCell(event);
         return;
       case "eraser":
         // this.#ctx.clearRect(
@@ -177,7 +185,7 @@ class GridCanvas {
         //   this.#gridItemSize,
         //   this.#gridItemSize
         // );
-        console.log("his.#filledCells", this.#filledCells);
+        console.log(this.#currentX, this.#currentY, this.#filledCells);
         this.#filledCells.filter((cell) => cell.x !== x && cell.y !== y);
         break;
       case "magnifying":
@@ -210,18 +218,18 @@ class GridCanvas {
   }
 
   #isSameCord(event) {
-    const { gridX: currentX, gridY: currentY } = this.getMouse(event);
-    console.log(this.#currentCell.x, this.#currentCell.y);
-    return this.#currentCell.x === currentX && this.#currentCell.y === currentY;
+    const { gridX, gridY } = this.getMouse(event);
+
+    return this.#currentX === gridX && this.#currentY === gridY;
   }
   #setNewCell(event) {
-    const { x: gridX, y: gridY } = this.getMouse(event);
+    const { gridX, gridY } = this.#getMouse(event);
 
-    if (this.#currentCell.x !== gridX) {
-      this.#currentCell.x = gridX;
+    if (this.#currentX !== gridX) {
+      this.#currentX = gridX;
     }
-    if (this.#currentCell.y !== gridY) {
-      this.#currentCell.y = gridY;
+    if (this.#currentX !== gridY) {
+      this.#currentY = gridY;
     }
   }
 }
