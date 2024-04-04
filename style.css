@@ -147,11 +147,11 @@ input[type="color"]::-webkit-color-swatch {
 
 canvas {
   border: 1px solid #000;
-  background-color: #fff;
+  background-color: transparent;
 }
 
 #gridCanvas {
-  position: absolute;
+  position: relative;
 }
 
 #gridResolutionLabel {
@@ -236,7 +236,7 @@ canvas {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(20%, -80%);
+  transform: translate(10%, -85%);
   pointer-events: none; /* Prevent cursor from interfering with clicks */
   z-index: 9999; /* Ensure it's on top of other elements */
   background-image: url("assets/pencil.svg");

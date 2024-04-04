@@ -1,31 +1,38 @@
 class MainBackground {
   constructor(config, width, size) {
+    const newBackground = document.createElement("canvas");
+    newBackground.width = width;
+    newBackground.height = width;
+    newBackground.style.opacity = "0.2";
+    newBackground.style.zIndex = 1;
+
     this.options = {
-      selector: document.querySelector("#gridCanvas"),
+      selector: newBackground,
       width: width,
       size: size,
       light: "#ffffff",
-      dark: "#a0a0a030",
+      dark: "#f0f0f0",
     };
-    if (config) Object.assign(this.options, this.options, config);
+
+    if (config) Object.assign(this.options, config);
     this.draw();
   }
 
   draw() {
-    let el = this.options.selector;
-    let ctx = el.getContext("2d");
-    let squareWidth = this.options.width / this.options.size;
-    let totalSquares = Math.pow(this.options.size, 2);
-    let i,
-      x,
-      y = -1;
+    const el = this.options.selector;
+    const ctx = el.getContext("2d");
+    const squareWidth = this.options.width / this.options.size;
+    const totalSquares = Math.pow(this.options.size, 2);
 
-    el.width = this.options.width;
-    el.height = this.options.width;
+    // Draw background color
+    ctx.fillStyle = "#f0f0f0"; // Background color
+    ctx.fillRect(0, 0, el.width, el.height);
 
-    for (i = 0; i < totalSquares; i++) {
-      x++;
-      if (i % this.options.size == 0) {
+    let x = 0,
+      y = 0;
+
+    for (let i = 0; i < totalSquares; i++) {
+      if (i % this.options.size === 0 && i !== 0) {
         y++;
         x = 0;
       }
@@ -34,6 +41,7 @@ class MainBackground {
       ctx.rect(x * squareWidth, y * squareWidth, squareWidth, squareWidth);
       ctx.fillStyle = (x + y) % 2 ? this.options.dark : this.options.light;
       ctx.fill();
+      x++;
     }
   }
 }

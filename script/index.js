@@ -57,9 +57,4 @@ generateGrid.addEventListener("click", () => {
   gridCanvas.drawGrid();
 });
 
-function drawPixel() {
-  gridCanvas.drawPixelListeners();
-}
-
-drawPixel();
 addLayerBtn.addEventListener("click", layer.create);
