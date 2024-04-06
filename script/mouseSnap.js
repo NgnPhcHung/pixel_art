@@ -28,7 +28,7 @@ class MouseSnap {
     this.gridElement.id = "mouseFollower";
       
     this.gridElement.style.position = "fixed";
-    this.gridElement.style.transform = "translate(-20%, -20%)";
+    this.gridElement.style.transform = "translate(-10%, 10%)";
     this.gridElement.style.width = this.gridSize + "px";
     this.gridElement.style.height = this.gridSize + "px";
     this.gridElement.style.pointerEvents = "none"; 

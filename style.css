@@ -133,7 +133,7 @@ input[type="color"]::-webkit-color-swatch {
   margin: 4px 0px;
 }
 
-#layerCard {
+.layerCard {
   height: 2rem;
   padding: 0.5rem 1rem;
   display: flex;
@@ -144,7 +144,7 @@ input[type="color"]::-webkit-color-swatch {
   font: 600;
   justify-content: space-between;
 }
-#layerCard.selected {
+.layerCard.selected {
   box-shadow: 0 0 0 1px #a0a0a0;
 }
 

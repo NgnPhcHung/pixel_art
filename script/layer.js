@@ -12,7 +12,7 @@ class Layer {
     const layerList = document.querySelectorAll("#gridCanvas");
     const layerManagement = new LayerManagement();
 
-    const newLayerName = `Layer_no.${layerList.length}`;
+    const newLayerName = `Layer_no_${layerList.length}`;
 
     newCanvas.style.background = "#a0a0a0";
     newCanvas.style.position = "absolute";

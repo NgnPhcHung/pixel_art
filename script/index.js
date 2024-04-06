@@ -38,7 +38,8 @@ function createCustomCursor() {
 
 document.addEventListener("DOMContentLoaded", () => {
   gridCanvas.drawGrid();
-
+  const layerManagement = new LayerManagement()
+  layerManagement.addLayer("gridCanvas")
   const rightPanel = document.getElementById("rightPanel");
   const collapseButton = document.getElementById("collapseButton");
 
