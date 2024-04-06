@@ -14,7 +14,10 @@
   <body>
     <div class="viewport">
       <div id="artContainer">
-        <canvas id="gridCanvas" width="640" height="640"></canvas>
+        <div id="canvasContainer">
+          <canvas id="chessboard"></canvas>
+          <canvas id="gridCanvas" width="640" height="640"> </canvas>
+        </div>
       </div>
       <div class="leftPanel" id="toolBar"></div>
 
@@ -46,6 +49,7 @@
     </div>
     <!-- color palette -->
     <script src="math/utils.js"></script>
+    <script src="script/mouseSnap.js"></script>
     <script src="script/mainBackground.js"></script>
     <script src="script/toolsBar.js"></script>
     <script src="script/colorPalette.js"></script>

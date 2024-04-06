@@ -16,10 +16,10 @@ class GridCanvas {
   #currentX = null;
   #currentY = null;
 
-  constructor(canvas) {
-    this.#canvas = canvas;
+  constructor() {
+    this.#canvas = document.getElementById("gridCanvas");
     this.#gridSize = DEFAULT_VALUE_GRID;
-    this.#gridItemSize = canvas.width / this.#gridSize;
+    this.#gridItemSize = this.#canvas.width / this.#gridSize;
     this.#ctx = this.#canvas.getContext("2d");
     this.zoom = 1;
     this.center = {
@@ -28,14 +28,17 @@ class GridCanvas {
     };
     this.offset = scale(this.center, -1);
 
+    this.mouseSnap = new MouseSnap(this.#gridItemSize);
     this.colorPalette = new ColorPalette();
     this.toolBar = new ToolBar();
 
-    // this.drawPixelListeners();
-    this.initDrag();
-    canvas.willReadFrequently = true;
+    this.#canvas.addEventListener("contextmenu", function (event) {
+      event.preventDefault();
+    });
 
-    //bind func
+    this.initDrag();
+    this.#canvas.willReadFrequently = true;
+
     this.getMouse = this.#getMouse.bind(this);
     this.getTool = this.#getTool.bind(this);
   }
@@ -52,11 +55,18 @@ class GridCanvas {
     );
     this.#canvas.addEventListener("click", this.#handleMouseClick.bind(this));
     this.#canvas.addEventListener("wheel", this.#handleMouseWheel.bind(this));
+    this.#canvas.addEventListener(
+      "mouseenter",
+      this.#handleMouseEnter.bind(this)
+    );
+    this.#canvas.addEventListener(
+      "mouseleave",
+      this.#handleMouseLeave.bind(this)
+    );
   }
   drawGrid() {
     const gridInputValue = document.getElementById("gridResolution").value;
     const addPaletteButton = document.getElementById("addPalette");
-
     this.#gridSize = parseInt(gridInputValue);
     this.#gridItemSize = this.#canvas.width / this.#gridSize;
     this.#ctx.clearRect(0, 0, this.#canvas.width, this.#canvas.height);
@@ -69,16 +79,24 @@ class GridCanvas {
       this.toolBar.loadElement();
     }
   }
+  #handleMouseEnter(event) {
+    this.mouseSnap.startMoving(this.#gridItemSize);
+  }
 
+  #handleMouseLeave(event) {
+    this.mouseSnap.stopMoving();
+  }
   #handleMouseClick(event) {
     event.preventDefault();
     this.getTool(event);
   }
+
   #handleMouseMove(event) {
     if (this.#isDragging) {
       this.#offsetX = event.clientX - this.#initialX;
       this.#offsetY = event.clientY - this.#initialY;
-      this.#canvas.style.transform = `translate(${this.#offsetX}px, ${
+      const canvasContainer = document.getElementById("canvasContainer");
+      canvasContainer.style.transform = `translate(${this.#offsetX}px, ${
         this.#offsetY
       }px)`;
     } else if (this.#isDrawing) {
@@ -166,27 +184,12 @@ class GridCanvas {
 
     switch (toolType) {
       case "pencil":
-        this.#ctx.fillStyle = selectedColor;
-        this.#ctx.fillRect(x, y, this.#gridItemSize, this.#gridItemSize);
-        const existingCellIndex = this.#filledCells.findIndex(
-          (cell) => cell.x === gridX && cell.y === gridY
-        );
-        if (existingCellIndex === -1) {
-          this.#filledCells.push({ x: gridX, y: gridY, color: selectedColor });
-        } else {
-          this.#filledCells[existingCellIndex].color = selectedColor; // Update color if cell already exists
-        }
-        this.#setNewCell(event);
-        return;
+        this.#drawCell(x, y, selectedColor);
+        this.#updateFilledCells(gridX, gridY, selectedColor);
+        break;
       case "eraser":
-        // this.#ctx.clearRect(
-        //   grid.x * this.#gridItemSize,
-        //   grid.y * this.#gridItemSize,
-        //   this.#gridItemSize,
-        //   this.#gridItemSize
-        // );
-        console.log(this.#currentX, this.#currentY, this.#filledCells);
-        this.#filledCells.filter((cell) => cell.x !== x && cell.y !== y);
+        this.#eraseCell(gridX, gridY);
+        this.#removeFilledCell(gridX, gridY);
         break;
       case "magnifying":
         break;
@@ -195,14 +198,39 @@ class GridCanvas {
     }
   }
 
-  #createBackground() {
-    new MainBackground(
-      {
-        selector: document.querySelector("#gridCanvas"),
-      },
-      this.#canvas.width,
-      this.#gridSize
+  #drawCell(x, y, color) {
+    this.#ctx.fillStyle = color;
+    this.#ctx.fillRect(x, y, this.#gridItemSize, this.#gridItemSize);
+  }
+
+  #eraseCell(gridX, gridY) {
+    this.#ctx.clearRect(
+      gridX * this.#gridItemSize,
+      gridY * this.#gridItemSize,
+      this.#gridItemSize,
+      this.#gridItemSize
     );
+  }
+
+  #updateFilledCells(gridX, gridY, color) {
+    const existingCellIndex = this.#filledCells.findIndex(
+      (cell) => cell.x === gridX && cell.y === gridY
+    );
+    if (existingCellIndex === -1) {
+      this.#filledCells.push({ x: gridX, y: gridY, color });
+    } else {
+      this.#filledCells[existingCellIndex].color = color;
+    }
+  }
+
+  #removeFilledCell(gridX, gridY) {
+    this.#filledCells = this.#filledCells.filter(
+      (cell) => !(cell.x === gridX && cell.y === gridY)
+    );
+  }
+
+  #createBackground() {
+    new MainBackground(this.#canvas.width, this.#gridSize).draw();
   }
 
   #redrawFilledCells() {

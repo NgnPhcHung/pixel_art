@@ -1,9 +1,9 @@
 class ColorPalette {
   constructor() {
-    this.colors = ["#ffffff", "#000000"];
-    this.selected = this.colors[1];
+    this.colors = ["#000000", "#ffffff"];
+    this.selected = this.colors[0];
     this.isGenerated = false;
-
+    
     this.load = this.load.bind(this);
     this.getSelectedColor = this.getSelectedColor.bind(this);
     this.addColor = this.addColor.bind(this);
@@ -19,6 +19,8 @@ class ColorPalette {
       newColorInput.style.width = "30px !important";
 
       newColorInput.addEventListener("click", (event) => {
+        this.#removeOtherActiveColor();
+        newColorInput.classList.add("active");
         this.selected = newColorInput.value;
       });
 
@@ -39,7 +41,10 @@ class ColorPalette {
     const newColorInput = document.createElement("input");
     newColorInput.value = "#000000";
     newColorInput.type = "color";
+    newColorInput.style.display="inline-block"
     newColorInput.addEventListener("click", (event) => {
+      this.#removeOtherActiveColor();
+      newColorInput.classList.add("active");
       this.selected = newColorInput.value;
     });
 
@@ -47,5 +52,15 @@ class ColorPalette {
       this.selected = event.target.value;
     });
     colorPalette.appendChild(newColorInput);
+  }
+
+  #removeOtherActiveColor() {
+    const palette = document.getElementById("colorPalette");
+    const childNodes = palette.childNodes;
+    childNodes.forEach((child) => {
+      if (child.classList.contains("active")) {
+        child.classList.remove("active");
+      }
+    });
   }
 }

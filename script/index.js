@@ -1,15 +1,10 @@
+
 const generateGrid = document.getElementById("generateGrid");
-const canvas = document.getElementById("gridCanvas");
 const addLayerBtn = document.getElementById("addLayer");
 
-const gridCanvas = new GridCanvas(canvas);
+const gridCanvas = new GridCanvas();
 const layer = new Layer();
 
-canvas.addEventListener("contextmenu", function (event) {
-  event.preventDefault();
-});
-
-//browser settings
 document.addEventListener(
   "mousedown",
   function (event) {

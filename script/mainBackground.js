@@ -1,27 +1,24 @@
 class MainBackground {
-  constructor(config, width, size) {
-    const newBackground = document.createElement("canvas");
-    newBackground.width = width;
-    newBackground.height = width;
-    newBackground.style.opacity = "0.2";
-    newBackground.style.zIndex = 1;
+  constructor( width, size) {
+    this.newBackground = document.createElement("canvas");
+    this.newBackground.width = width;
+    this.newBackground.height = width;
+    this.newBackground.id = "chessboard";
 
     this.options = {
-      selector: newBackground,
       width: width,
       size: size,
       light: "#ffffff",
       dark: "#f0f0f0",
     };
 
-    if (config) Object.assign(this.options, config);
     this.draw();
   }
 
   draw() {
-    const el = this.options.selector;
+    const el = this.newBackground;
     const ctx = el.getContext("2d");
-    const squareWidth = this.options.width / this.options.size;
+    const squareWidth = el.width / this.options.size;
     const totalSquares = Math.pow(this.options.size, 2);
 
     // Draw background color
@@ -43,5 +40,15 @@ class MainBackground {
       ctx.fill();
       x++;
     }
+    const container = document.querySelector("#canvasContainer");
+const existingChildren = document.querySelectorAll("#chessboard");
+
+existingChildren.forEach(child => {
+  if (child.id === "chessboard") {
+    child.parentNode.removeChild(child);
+  }
+});
+
+container.appendChild(this.newBackground);
   }
 }

@@ -14,6 +14,8 @@ class ToolBar {
     this.zoomInHandler = this.zoomInHandler.bind(this);
     this.zoomOutHandler = this.zoomOutHandler.bind(this);
     this.buttonClickAction = this.buttonClickAction.bind(this);
+
+
   }
 
   loadElement() {

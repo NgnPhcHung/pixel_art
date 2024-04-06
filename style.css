@@ -41,6 +41,7 @@ input[type="color"] {
   background-color: transparent;
   border: none;
   cursor: pointer;
+  transition: all 0.25s ease;
 }
 input[type="color"]::-webkit-color-swatch {
   border-radius: 5px;
@@ -92,7 +93,9 @@ input[type="color"]::-webkit-color-swatch {
   position: fixed;
   top: 5%;
   left: -2rem;
-  font-size: 1.5rem;
+  font-size: 1rem;
+  background-color: #5b5b5b;
+  border-radius: 2px;
 }
 
 .rightPanel.collapsed #collapseButton {
@@ -146,12 +149,22 @@ input[type="color"]::-webkit-color-swatch {
 }
 
 canvas {
-  border: 1px solid #000;
   background-color: transparent;
+}
+#canvasContainer {
+  position: relative;
+  width: 640px; /* Adjust width as needed */
+  height: 640px; /* Adjust height as needed */
 }
 
 #gridCanvas {
-  position: relative;
+  z-index: 2;
+  position: absolute;
+}
+
+#chessboard {
+  position: absolute;
+  z-index: 0;
 }
 
 #gridResolutionLabel {
@@ -193,10 +206,18 @@ canvas {
 .btn {
   font-size: 15px;
   padding: 0.5rem;
+  transition: all 0.5s ease-out;
 }
 .toolActive {
-  background-color: #202020;
+  background-color: #4cbaff;
   border-radius: 5px;
+  color: #202020;
+}
+
+input[type="color"].active {
+  border: 2px solid #f0f0f0;
+  border-radius: 10px;
+  padding: 0 !important;
 }
 
 #addPalette {
@@ -237,8 +258,16 @@ canvas {
   top: 50%;
   left: 50%;
   transform: translate(10%, -85%);
-  pointer-events: none; /* Prevent cursor from interfering with clicks */
-  z-index: 9999; /* Ensure it's on top of other elements */
+  pointer-events: none;
+  z-index: 9999;
   background-image: url("assets/pencil.svg");
-  background-size: cover; /* Ensure the SVG covers the container */
+  background-size: cover;
 }
+
+#mouseFollower {
+  border: 1px solid #5b5b5b;
+  z-index: 30;
+  position: fixed;
+  transition: transform 0.2s  cubic-bezier(0.25, 0.46, 0.45, 0.94) /* Add transition for smoother movement */
+}
+
